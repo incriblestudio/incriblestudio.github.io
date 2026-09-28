@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Custom Brushes - Anima Clip</title>
   <meta name="description" content="Download custom brush packs for Anima Clip." />
+
+  <!-- Browser Tab Icon (Favicon) -->
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="shortcut icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
+  <!-- Social Link Sharing Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://incriblestudio.github.io/brushes.html" />
+  <meta property="og:title" content="Custom Brushes - Anima Clip" />
+  <meta property="og:description" content="Download custom brush packs for Anima Clip." />
+  <meta property="og:image" content="https://incriblestudio.github.io/logo.png" />
+
   <style>
     :root {
       --primary: #2563eb;
@@ -213,12 +226,7 @@
   <div class="container">
     <header class="top-nav">
       <a href="index.html" class="brand-link">
-        <img 
-          src="images/logo.png" 
-          alt="Anima Clip Logo" 
-          class="app-logo" 
-          onerror="if(this.src.indexOf('images/logo.png')!==-1){this.src='logo.png';}else if(this.src.indexOf('logo.png')!==-1){this.src='images/logo.jpg';}" 
-        />
+        <img src="logo.png" alt="Anima Clip Logo" class="app-logo" />
         <span>Anima Clip</span>
       </a>
       <a href="index.html" class="nav-back">
@@ -242,7 +250,6 @@
       </section>
     </main>
 
-    <!-- Footer: Retains copyright and only Support, Privacy Policy, app-ads.txt -->
     <footer>
       <p class="copyright">&copy; 2026 Anima Clip. All rights reserved.</p>
       <div class="footer-links">
@@ -254,7 +261,6 @@
   </div>
 
   <script>
-    // Updated to your new GitHub Organization and Repository name
     const GITHUB_USER = "incriblestudio";
     const GITHUB_REPO = "incriblestudio.github.io";
     const API_URL = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/brushes`;
