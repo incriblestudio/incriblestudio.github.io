@@ -177,7 +177,6 @@
       flex-shrink: 0;
     }
 
-    /* Question Header: wrap gracefully without overflowing */
     .question-header {
       display: flex;
       justify-content: space-between;
@@ -252,7 +251,6 @@
       border: 1px solid #e1bee7;
     }
 
-    /* Reply Header Layout */
     .reply-header {
       margin-bottom: 8px;
       width: 100%;
@@ -496,6 +494,12 @@
       font-size: 13px;
       cursor: pointer;
     }
+
+    /* Modal Backdrop Styling */
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(2px);
+    }
   </style>
 </head>
 <body>
@@ -592,6 +596,19 @@
     </div>
   </div>
 
+  <!-- Secure Developer Authentication Modal -->
+  <dialog id="devLoginModal" style="border: none; border-radius: 12px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); max-width: 320px; width: 90%;">
+    <form id="devLoginForm" method="dialog" style="display: flex; flex-direction: column; gap: 12px;">
+      <h3 style="margin: 0; color: #1a73e8; font-size: 16px;">Developer Authentication</h3>
+      <input type="email" id="devModalEmail" placeholder="Developer Email" required autocomplete="username" style="margin-bottom: 0;">
+      <input type="password" id="devModalPassword" placeholder="Developer Password" required autocomplete="current-password" style="margin-bottom: 0;">
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px;">
+        <button type="button" id="btnCancelDevLogin" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </form>
+  </dialog>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { 
@@ -612,7 +629,6 @@
     }
     const myDeviceId = getUserId();
 
-    // Updated Cloudflare Worker Endpoint
     const WORKER_AI_URL = "https://anima-clip-bot.incriblestudio.workers.dev";
 
     const firebaseConfig = {
@@ -633,6 +649,10 @@
     const openReplyBoxes = new Set();
     let currentQuestionsData = [];
 
+    const devModal = document.getElementById('devLoginModal');
+    const devForm = document.getElementById('devLoginForm');
+    const btnCancelDev = document.getElementById('btnCancelDevLogin');
+
     onAuthStateChanged(auth, (user) => {
       currentDevUser = user;
       const devToggleBtn = document.getElementById('devToggleBtn');
@@ -651,17 +671,25 @@
         await signOut(auth);
         showNotification("Logged out of Developer account.");
       } else {
-        const email = prompt("Enter Developer Email:");
-        if (!email) return;
-        const password = prompt("Enter Developer Password:");
-        if (!password) return;
+        document.getElementById('devModalEmail').value = '';
+        document.getElementById('devModalPassword').value = '';
+        devModal.showModal();
+      }
+    };
 
-        try {
-          await signInWithEmailAndPassword(auth, email.trim(), password);
-          showNotification("✓ Authenticated as Developer! Delete controls and badges enabled.");
-        } catch (err) {
-          alert("Login failed: " + err.message);
-        }
+    btnCancelDev.onclick = () => devModal.close();
+
+    devForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('devModalEmail').value.trim();
+      const password = document.getElementById('devModalPassword').value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        devModal.close();
+        showNotification("✓ Authenticated as Developer! Delete controls and badges enabled.");
+      } catch (err) {
+        alert("Login failed: " + err.message);
       }
     };
 
