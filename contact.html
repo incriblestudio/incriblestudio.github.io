@@ -365,7 +365,7 @@
       const message = document.getElementById('ticketMessage').value.trim();
 
       try {
-        // 1. Save directly to Firebase first so inquiries are never dropped
+        // Save to Firebase first so inquiries are never dropped
         await addDoc(collection(db, "contact_submissions"), {
           name,
           email,
@@ -374,7 +374,7 @@
           createdAt: serverTimestamp()
         });
 
-        // 2. Dispatch email notification in background
+        // Send email notification in the background
         try {
           await fetch(`https://formsubmit.co/ajax/${DEV_NOTIFICATION_EMAIL}`, {
             method: "POST",
