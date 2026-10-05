@@ -37,13 +37,13 @@ export default {
         });
       }
 
-      // Priority list of Gemini Flash models
+      // Priority list: Gemini 3.5 first, 3.8 at the end
       const models = [
-        "gemini-3.8-flash",
-        "gemini-3.7-flash",
-        "gemini-3.6-flash",
         "gemini-3.5-flash",
-        "gemini-3.5-flash-lite"
+        "gemini-3.5-flash-lite",
+        "gemini-3.6-flash",
+        "gemini-3.7-flash",
+        "gemini-3.8-flash"
       ];
 
       const promptText = `You are the official in-app community assistant for 'Anima Clip', a 2D animation mobile app by Incrible Studio.
