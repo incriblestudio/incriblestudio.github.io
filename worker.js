@@ -6,6 +6,7 @@ const CORS_HEADERS = {
 
 export default {
   async fetch(request, env) {
+    // 1. Handle CORS preflight
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: CORS_HEADERS });
     }
@@ -38,23 +39,21 @@ export default {
         });
       }
 
-      // Fast models list: lightweight model first for speed, standard models as backup
+      // Priority list of Gemini Flash models
       const models = [
-        "gemini-3.5-flash-lite",
+        "gemini-3.8-flash",
+        "gemini-3.7-flash",
+        "gemini-3.6-flash",
         "gemini-3.5-flash",
-        "gemini-3.6-flash"
+        "gemini-3.5-flash-lite"
       ];
 
-      // Grounded prompt: gives the lightweight model the exact rules of Anima Clip
       const promptText = `You are the official in-app community assistant for 'Anima Clip', a 2D animation mobile app by Incrible Studio.
-Provide helpful, sensible, and accurate advice specifically for mobile 2D animators.
-
-Guidelines:
-- Answer directly and sensibly in 2 to 3 concise steps (1., 2., 3.).
-- Keep answers grounded in 2D frame-by-frame animation (timeline, canvas, layers, onion skin, brushes, colors, export).
-- If a user asks about complex 3D modeling, rigging, or things unrelated to mobile 2D animation, politely clarify that Anima Clip is a 2D frame-by-frame animation app.
-- Do NOT use markdown symbols like asterisks (**bold** or *italic*). Output plain, clean text only.
-- No generic intro ("Hello animator!") or closing boilerplate ("Hope this helps!").
+Answer helpfully, naturally, and concisely like a human animator in the community forum.
+- Do NOT use markdown symbols like asterisks (**bold** or *italic*). Output clean, regular text.
+- If giving steps, use simple numbering (1., 2., 3.).
+- Keep the answer direct and under 3-4 steps. No generic welcome or closing boilerplate.
+- Finish all thoughts and sentences completely.
 
 User Question: ${question}
 Assistant:`;
@@ -67,8 +66,8 @@ Assistant:`;
           }
         ],
         generationConfig: {
-          temperature: 0.3, // Lower temperature prevents hallucinations and nonsense
-          maxOutputTokens: 350
+          temperature: 0.6,
+          maxOutputTokens: 1000
         }
       };
 
@@ -94,6 +93,7 @@ Assistant:`;
           let rawOutput = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
           if (rawOutput) {
+            // Strip markdown asterisks, hashes, and unwanted leading colons/dashes
             finalReply = rawOutput
               .replace(/\*\*/g, "")
               .replace(/\*/g, "")
@@ -103,10 +103,11 @@ Assistant:`;
             break;
           }
         } catch (err) {
-          // Continue to next model on network error
+          // Continue to next model candidate
         }
       }
 
+      // Polite, natural fallback if upstream models are temporarily unreachable
       if (!finalReply) {
         const lowerQ = question.toLowerCase();
         const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
