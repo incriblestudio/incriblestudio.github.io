@@ -39,13 +39,12 @@ export default {
         });
       }
 
-      // Priority list of standard Flash models (Lite variants removed)
+      // Priority list of Gemini 3.x Flash models (Flash-Lite removed)
       const models = [
         "gemini-3.8-flash",
         "gemini-3.7-flash",
         "gemini-3.6-flash",
-        "gemini-3.5-flash",
-        "gemini-2.5-flash"
+        "gemini-3.5-flash"
       ];
 
       const promptText = `You are the official in-app community assistant for 'Anima Clip', a 2D animation mobile app by Incrible Studio.
@@ -76,8 +75,6 @@ Assistant:`;
       for (const model of models) {
         try {
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-          
-          // 5-second per-model timeout prevents cold-start request abortion
           const response = await fetch(url, {
             method: "POST",
             headers: { 
@@ -93,10 +90,10 @@ Assistant:`;
           }
 
           const data = await response.json();
-          const candidateParts = data.candidates?.[0]?.content?.parts || [];
-          let rawOutput = candidateParts.map(p => p.text || "").join("").trim();
+          let rawOutput = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
           if (rawOutput) {
+            // Strip markdown asterisks, hashes, and unwanted leading colons/dashes
             finalReply = rawOutput
               .replace(/\*\*/g, "")
               .replace(/\*/g, "")
@@ -106,12 +103,12 @@ Assistant:`;
             break;
           }
         } catch (err) {
-          // If a model errors or times out, immediately proceed to next candidate
+          // If a model hangs or times out, immediately cycle to the next candidate
           continue;
         }
       }
 
-      // Polite, natural fallback
+      // Polite, natural fallback if upstream models are temporarily unreachable
       if (!finalReply) {
         const lowerQ = question.toLowerCase();
         const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
