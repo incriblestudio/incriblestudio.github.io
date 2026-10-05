@@ -495,7 +495,6 @@
       cursor: pointer;
     }
 
-    /* Modal Backdrop Styling */
     dialog::backdrop {
       background: rgba(0, 0, 0, 0.45);
       backdrop-filter: blur(2px);
@@ -596,7 +595,6 @@
     </div>
   </div>
 
-  <!-- Secure Developer Authentication Modal -->
   <dialog id="devLoginModal" style="border: none; border-radius: 12px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); max-width: 320px; width: 90%;">
     <form id="devLoginForm" method="dialog" style="display: flex; flex-direction: column; gap: 12px;">
       <h3 style="margin: 0; color: #1a73e8; font-size: 16px;">Developer Authentication</h3>
@@ -839,10 +837,10 @@
       }
     };
 
-    window.deleteQuestion = async (id, ownerId) => {
-      const isOwner = ownerId && ownerId === myDeviceId;
-      if (!currentDevUser && !isOwner) {
-        alert("Unauthorized: You can only delete your own questions.");
+    // Locked to Developer Only
+    window.deleteQuestion = async (id) => {
+      if (!currentDevUser) {
+        alert("Unauthorized: Only the developer can delete questions.");
         return;
       }
 
@@ -856,10 +854,10 @@
       }
     };
 
-    window.deleteReply = async (questionId, replyId, replyOwnerId) => {
-      const isOwner = replyOwnerId && replyOwnerId === myDeviceId;
-      if (!currentDevUser && !isOwner) {
-        alert("Unauthorized: You can only delete your own replies.");
+    // Locked to Developer Only
+    window.deleteReply = async (questionId, replyId) => {
+      if (!currentDevUser) {
+        alert("Unauthorized: Only the developer can delete replies.");
         return;
       }
 
@@ -891,7 +889,7 @@
       container.innerHTML = questions.map(q => {
         const replies = q.replies || [];
         const isBoxOpen = openReplyBoxes.has(q.id);
-        const canDeleteQuestion = currentDevUser || (q.userId && q.userId === myDeviceId);
+        const canDeleteQuestion = Boolean(currentDevUser);
         const qDate = q.date || formatTimestamp(q.createdAt);
 
         return `
@@ -900,7 +898,7 @@
               <span class="author-name">${escapeHTML(q.author)}</span>
               <div class="question-meta-right">
                 <span class="date-tag">${escapeHTML(qDate)}</span>
-                ${canDeleteQuestion ? `<button class="btn btn-danger" onclick="deleteQuestion('${q.id}', '${escapeHTML(q.userId || '')}')">Delete Post</button>` : ''}
+                ${canDeleteQuestion ? `<button class="btn btn-danger" onclick="deleteQuestion('${q.id}')">Delete Post</button>` : ''}
               </div>
             </div>
             <div class="question-text">${escapeHTML(cleanFormatting(q.text))}</div>
@@ -918,7 +916,7 @@
             ${replies.length > 0 ? `
               <div class="replies-list">
                 ${replies.map(r => {
-                  const canDeleteReply = currentDevUser || (r.userId && r.userId === myDeviceId);
+                  const canDeleteReply = Boolean(currentDevUser);
                   const isAiBot = r.isAi || (r.author && (r.author.toLowerCase().includes('assistant') || r.author.toLowerCase().includes('bot')));
                   const displayName = isAiBot ? 'Anima Clip Bot' : escapeHTML(r.author);
 
@@ -927,7 +925,7 @@
                       <div class="reply-header">
                         <div class="reply-name-row">
                           <span class="reply-author">${displayName}</span>
-                          ${canDeleteReply ? `<button class="btn-danger-sm" onclick="deleteReply('${q.id}', '${r.id}', '${escapeHTML(r.userId || '')}')">Delete</button>` : ''}
+                          ${canDeleteReply ? `<button class="btn-danger-sm" onclick="deleteReply('${q.id}', '${r.id}')">Delete</button>` : ''}
                         </div>
                         <div class="reply-sub-row">
                           <div class="reply-badges-left">
@@ -973,7 +971,10 @@
       userBubble.className = 'chat-bubble user';
       userBubble.textContent = question;
       aiChatMessages.appendChild(userBubble);
+      
       aiChatInput.value = '';
+      aiChatInput.disabled = true;
+      aiChatSend.disabled = true;
 
       const loadingBubble = document.createElement('div');
       loadingBubble.className = 'chat-bubble loading';
@@ -1000,9 +1001,12 @@
         errBubble.className = 'chat-bubble bot';
         errBubble.textContent = "Connection issue. Please try again in a moment.";
         aiChatMessages.appendChild(errBubble);
+      } finally {
+        aiChatInput.disabled = false;
+        aiChatSend.disabled = false;
+        aiChatInput.focus();
+        aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
       }
-
-      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
     }
 
     aiChatSend.onclick = sendDirectAiMessage;
