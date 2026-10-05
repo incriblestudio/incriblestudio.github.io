@@ -29,6 +29,7 @@ export default {
         });
       }
 
+      // Matches uppercase Cloudflare secret: GEMINI_API_KEY
       const apiKey = env.GEMINI_API_KEY;
       if (!apiKey) {
         return new Response(JSON.stringify({ reply: "Error: GEMINI_API_KEY is missing in Cloudflare settings." }), {
@@ -37,13 +38,13 @@ export default {
         });
       }
 
-      // Priority list: Gemini 3.5 first, 3.8 at the end
+      // Model priority order: 3.8 first, 3.5-flash-lite last
       const models = [
-        "gemini-3.5-flash",
-        "gemini-3.5-flash-lite",
-        "gemini-3.6-flash",
+        "gemini-3.8-flash",
         "gemini-3.7-flash",
-        "gemini-3.8-flash"
+        "gemini-3.6-flash",
+        "gemini-3.5-flash",
+        "gemini-3.5-flash-lite"
       ];
 
       const promptText = `You are the official in-app community assistant for 'Anima Clip', a 2D animation mobile app by Incrible Studio.
@@ -88,7 +89,6 @@ Assistant:`;
           let rawOutput = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
           if (rawOutput) {
-            // Strip markdown asterisks, hashes, and unwanted leading colons/dashes
             finalReply = rawOutput
               .replace(/\*\*/g, "")
               .replace(/\*/g, "")
@@ -98,11 +98,11 @@ Assistant:`;
             break;
           }
         } catch (err) {
-          // Continue to next model on fetch failure
+          // Move to next candidate model
         }
       }
 
-      // Resilient fallback if upstream models are temporarily busy
+      // Resilient fallback if upstream models are busy
       if (!finalReply) {
         const lowerQ = question.toLowerCase();
         const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
