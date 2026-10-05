@@ -70,7 +70,6 @@ Assistant:`;
       };
 
       let finalReply = null;
-      let lastErrorMessage = "";
 
       for (const model of models) {
         try {
@@ -82,8 +81,6 @@ Assistant:`;
           });
 
           if (!response.ok) {
-            const errData = await response.text();
-            lastErrorMessage = `Model ${model} returned status ${response.status}: ${errData}`;
             continue;
           }
 
@@ -100,18 +97,21 @@ Assistant:`;
               .trim();
             break;
           }
-
-          if (data.error) {
-            lastErrorMessage = data.error.message || JSON.stringify(data.error);
-          }
         } catch (err) {
-          lastErrorMessage = err.message;
+          // Continue to next model on fetch failure
         }
       }
 
       // Resilient fallback if upstream models are temporarily busy
       if (!finalReply) {
-        finalReply = "To work with layers, audio, or frames in Anima Clip, open your canvas and tap the tool icons in the bottom menu. If you experience an issue, make sure app permissions for storage are enabled.";
+        const lowerQ = question.toLowerCase();
+        const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
+
+        if (isCompliment) {
+          finalReply = "Thank you so much for the kind words and support! The Incrible Studio team really appreciates having you in our animation community.";
+        } else {
+          finalReply = "To work with layers, audio, or frames in Anima Clip, open your canvas and tap the tool icons in the bottom menu. If you experience an issue, make sure app permissions for storage are enabled.";
+        }
       }
 
       return new Response(JSON.stringify({ reply: finalReply }), {
