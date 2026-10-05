@@ -21,9 +21,16 @@ export default {
       const body = await request.json();
       const question = body?.question?.trim();
 
+      if (!question) {
+        return new Response(JSON.stringify({ error: "No question provided" }), {
+          status: 400,
+          headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+        });
+      }
+
       const apiKey = env.GEMINI_API_KEY;
       if (!apiKey) {
-        return new Response(JSON.stringify({ reply: "Cloudflare Error: env.GEMINI_API_KEY is not defined or empty." }), {
+        return new Response(JSON.stringify({ reply: "The AI Assistant is currently unavailable, a community member or our developer will reach out to you soon." }), {
           status: 200,
           headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
         });
@@ -37,29 +44,37 @@ export default {
         "gemini-3.5-flash-lite"
       ];
 
-      const promptText = `You are the community assistant for 'Anima Clip'. Answer concisely in plain text: ${question}`;
+      const promptText = `You are the official in-app community assistant for 'Anima Clip', a 2D animation mobile app by Incrible Studio.
+Answer helpfully, naturally, and concisely like a human animator in the community forum.
+- Do NOT use markdown symbols like asterisks (**bold** or *italic*). Output clean, regular text.
+- If giving steps, use simple numbering (1., 2., 3.).
+- Keep the answer direct and under 3-4 steps. No generic welcome or closing boilerplate.
+- Finish all thoughts and sentences completely.
+
+User Question: ${question}
+Assistant:`;
 
       const payload = {
-        contents: [{ role: "user", parts: [{ text: promptText }] }]
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: promptText }]
+          }
+        ]
       };
 
       let finalReply = null;
-      let diagnosticLog = [];
 
       for (const model of models) {
         try {
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
           const response = await fetch(url, {
             method: "POST",
-            headers: { 
-              "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
           });
 
           if (!response.ok) {
-            const errText = await response.text();
-            diagnosticLog.push(`${model} -> HTTP ${response.status}: ${errText.slice(0, 120)}`);
             continue;
           }
 
@@ -76,13 +91,19 @@ export default {
             break;
           }
         } catch (err) {
-          diagnosticLog.push(`${model} -> Fetch exception: ${err.message}`);
+          // Continue to next model on network error
         }
       }
 
       if (!finalReply) {
-        // Output the exact Google error response directly to the chat
-        finalReply = `[API Error Diagnostics]: ` + diagnosticLog.join(" | ");
+        const lowerQ = question.toLowerCase();
+        const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
+
+        if (isCompliment) {
+          finalReply = "Thank you so much for the kind words and support! The Incrible Studio team really appreciates having you in our animation community.";
+        } else {
+          finalReply = "The AI Assistant is currently unavailable, a community member or our developer will reach out to you soon.";
+        }
       }
 
       return new Response(JSON.stringify({ reply: finalReply }), {
@@ -91,7 +112,7 @@ export default {
       });
 
     } catch (err) {
-      return new Response(JSON.stringify({ error: "Worker crash: " + err.message }), {
+      return new Response(JSON.stringify({ error: "Worker internal failure: " + err.message }), {
         status: 500,
         headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
       });
