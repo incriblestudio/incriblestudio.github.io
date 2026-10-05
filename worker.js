@@ -29,7 +29,7 @@ export default {
         });
       }
 
-      const apiKey = env.GEMINI_API_KEY;
+      const apiKey = env.GEMINI_API_KEY ? env.GEMINI_API_KEY.trim() : null;
       if (!apiKey) {
         return new Response(JSON.stringify({ 
           reply: "The AI Assistant is currently unavailable, a community member or our developer will reach out to you soon." 
@@ -39,13 +39,13 @@ export default {
         });
       }
 
-      // Priority list of Gemini Flash models
+      // Priority list of standard Flash models (Lite variants removed)
       const models = [
         "gemini-3.8-flash",
         "gemini-3.7-flash",
         "gemini-3.6-flash",
         "gemini-3.5-flash",
-        "gemini-3.5-flash-lite"
+        "gemini-2.5-flash"
       ];
 
       const promptText = `You are the official in-app community assistant for 'Anima Clip', a 2D animation mobile app by Incrible Studio.
@@ -75,14 +75,17 @@ Assistant:`;
 
       for (const model of models) {
         try {
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+          
+          // 5-second per-model timeout prevents cold-start request abortion
           const response = await fetch(url, {
             method: "POST",
             headers: { 
               "Content-Type": "application/json",
-              "x-goog-api-key": apiKey.trim()
+              "x-goog-api-key": apiKey
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+            signal: AbortSignal.timeout(5000)
           });
 
           if (!response.ok) {
@@ -90,10 +93,10 @@ Assistant:`;
           }
 
           const data = await response.json();
-          let rawOutput = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          const candidateParts = data.candidates?.[0]?.content?.parts || [];
+          let rawOutput = candidateParts.map(p => p.text || "").join("").trim();
 
           if (rawOutput) {
-            // Strip markdown asterisks, hashes, and unwanted leading colons/dashes
             finalReply = rawOutput
               .replace(/\*\*/g, "")
               .replace(/\*/g, "")
@@ -103,11 +106,12 @@ Assistant:`;
             break;
           }
         } catch (err) {
-          // Continue to next model candidate
+          // If a model errors or times out, immediately proceed to next candidate
+          continue;
         }
       }
 
-      // Polite, natural fallback if upstream models are temporarily unreachable
+      // Polite, natural fallback
       if (!finalReply) {
         const lowerQ = question.toLowerCase();
         const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
