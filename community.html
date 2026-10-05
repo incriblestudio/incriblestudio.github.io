@@ -837,7 +837,7 @@
       }
     };
 
-    // Locked to Developer Only
+    // Developer Only Deletion
     window.deleteQuestion = async (id) => {
       if (!currentDevUser) {
         alert("Unauthorized: Only the developer can delete questions.");
@@ -854,7 +854,7 @@
       }
     };
 
-    // Locked to Developer Only
+    // Developer Only Reply Deletion
     window.deleteReply = async (questionId, replyId) => {
       if (!currentDevUser) {
         alert("Unauthorized: Only the developer can delete replies.");
