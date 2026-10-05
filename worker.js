@@ -29,16 +29,14 @@ export default {
         });
       }
 
-      // Matches uppercase Cloudflare secret: GEMINI_API_KEY
       const apiKey = env.GEMINI_API_KEY;
       if (!apiKey) {
-        return new Response(JSON.stringify({ reply: "Error: GEMINI_API_KEY is missing in Cloudflare settings." }), {
-          status: 500,
+        return new Response(JSON.stringify({ reply: "The AI Assistant is currently unavailable, a community member or our developer will reach out to you soon." }), {
+          status: 200,
           headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
         });
       }
 
-      // Model priority order: 3.8 first, 3.5-flash-lite last
       const models = [
         "gemini-3.8-flash",
         "gemini-3.7-flash",
@@ -63,11 +61,7 @@ Assistant:`;
             role: "user",
             parts: [{ text: promptText }]
           }
-        ],
-        generationConfig: {
-          temperature: 0.6,
-          maxOutputTokens: 1000
-        }
+        ]
       };
 
       let finalReply = null;
@@ -77,7 +71,9 @@ Assistant:`;
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
           const response = await fetch(url, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json"
+            },
             body: JSON.stringify(payload)
           });
 
@@ -98,11 +94,11 @@ Assistant:`;
             break;
           }
         } catch (err) {
-          // Move to next candidate model
+          // Continue to next model on network error
         }
       }
 
-      // Resilient fallback if upstream models are busy
+      // Fallback message when AI generation is unavailable
       if (!finalReply) {
         const lowerQ = question.toLowerCase();
         const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
@@ -110,7 +106,7 @@ Assistant:`;
         if (isCompliment) {
           finalReply = "Thank you so much for the kind words and support! The Incrible Studio team really appreciates having you in our animation community.";
         } else {
-          finalReply = "To work with layers, audio, or frames in Anima Clip, open your canvas and tap the tool icons in the bottom menu. If you experience an issue, make sure app permissions for storage are enabled.";
+          finalReply = "The AI Assistant is currently unavailable, a community member or our developer will reach out to you soon.";
         }
       }
 
