@@ -6,6 +6,7 @@ const CORS_HEADERS = {
 
 export default {
   async fetch(request, env) {
+    // 1. Handle CORS preflight
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: CORS_HEADERS });
     }
@@ -28,14 +29,18 @@ export default {
         });
       }
 
+      // Reads uppercase Cloudflare secret: GEMINI_API_KEY
       const apiKey = env.GEMINI_API_KEY;
       if (!apiKey) {
-        return new Response(JSON.stringify({ reply: "The AI Assistant is currently unavailable, a community member or our developer will reach out to you soon." }), {
+        return new Response(JSON.stringify({ 
+          reply: "The AI Assistant is currently unavailable, a community member or our developer will reach out to you soon." 
+        }), {
           status: 200,
           headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
         });
       }
 
+      // Prioritized models: gemini-3.8-flash first down to flash-lite last
       const models = [
         "gemini-3.8-flash",
         "gemini-3.7-flash",
@@ -70,7 +75,10 @@ Assistant:`;
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
           const response = await fetch(url, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              "x-goog-api-key": apiKey.trim()
+            },
             body: JSON.stringify(payload)
           });
 
@@ -82,6 +90,7 @@ Assistant:`;
           let rawOutput = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
           if (rawOutput) {
+            // Strip markdown formatting symbols
             finalReply = rawOutput
               .replace(/\*\*/g, "")
               .replace(/\*/g, "")
@@ -91,10 +100,11 @@ Assistant:`;
             break;
           }
         } catch (err) {
-          // Continue to next model on network error
+          // Fall through to next model candidate
         }
       }
 
+      // Fallback response if upstream models are temporarily unreachable
       if (!finalReply) {
         const lowerQ = question.toLowerCase();
         const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
