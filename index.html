@@ -87,30 +87,33 @@
       gap: 0.9rem;
     }
 
-    .apk-download-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
+    /* Relative wrapper so the badge anchors to the button */
+    .apk-btn-wrapper {
+      position: relative;
+      display: inline-flex;
       width: 100%;
-      max-width: 380px;
+      max-width: 290px;
+      justify-content: center;
     }
 
+    /* Small badge docked on the top-right corner */
     .apk-version-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute;
+      top: -8px;
+      right: -8px;
       background: #fdf2f8;
       color: var(--pink);
-      border: 1px solid #fbcfe8;
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 0.4rem 0.65rem;
-      border-radius: 8px;
+      border: 1.5px solid #fbcfe8;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.15rem 0.45rem;
+      border-radius: 9999px;
+      line-height: 1.2;
       letter-spacing: 0.02em;
       white-space: nowrap;
-      height: fit-content;
       box-shadow: var(--shadow-sm);
+      z-index: 2;
+      pointer-events: none;
     }
 
     .btn-action { 
@@ -194,13 +197,6 @@
       footer { flex-direction: column; text-align: center; gap: 1.25rem; }
       .footer-links a { margin: 0 0.6rem; }
     }
-
-    @media (max-width: 480px) {
-      .apk-download-container {
-        flex-direction: column;
-        gap: 0.4rem;
-      }
-    }
   </style>
 </head>
 <body>
@@ -217,7 +213,7 @@
       <p>A lightweight 2D animation studio designed for smooth frame-by-frame sketching, timeline control, and instant playback on mobile.</p>
       
       <div class="hero-buttons">
-        <div class="apk-download-container">
+        <div class="apk-btn-wrapper">
           <a href="app-release.apk" class="btn-action btn-pink" download="AnimaClip.apk">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -226,7 +222,7 @@
             </svg>
             <span>Direct Download (.apk)</span>
           </a>
-          <span class="apk-version-badge" id="apkVersionTag">Loading...</span>
+          <span class="apk-version-badge" id="apkVersionTag">...</span>
         </div>
 
         <a href="https://play.google.com/store/apps/details?id=com.animaclip.app" class="btn-action btn-blue" target="_blank" rel="noopener">
@@ -257,7 +253,7 @@
         <p>Add, duplicate, reorder, and review frames seamlessly with a scrubbable timeline designed for touch screens.</p>
       </div>
       <div class="card">
-        <h3>🖼️ Import Media Assets</h3>
+        <h3>🖼️️ Import Media Assets</h3>
         <p>Bring background imagery and video reference clips directly onto your canvas to animate over or trace with ease.</p>
       </div>
       <div class="card">
