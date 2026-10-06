@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
   <title>Community Q&A - Anima Clip</title>
   <style>
     *, *::before, *::after {
@@ -498,15 +498,16 @@
     #devLoginModal {
       border: none;
       border-radius: 12px;
-      padding: 22px;
+      padding: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       max-width: 320px;
       width: 90%;
       position: fixed;
-      top: 15% !important;
-      left: 50% !important;
-      transform: translateX(-50%) !important;
-      margin: 0 !important;
+      top: 10px;
+      bottom: auto;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
     }
 
     dialog::backdrop {
@@ -667,11 +668,23 @@
     const devEmailInput = document.getElementById('devModalEmail');
     const devPasswordInput = document.getElementById('devModalPassword');
 
+    function adjustModalForKeyboard() {
+      if (!devModal.open) return;
+      if (window.visualViewport) {
+        // Keeps modal strictly anchored at top: 10px relative to the visible window above keyboard
+        const offsetTop = window.visualViewport.offsetTop;
+        devModal.style.top = `${offsetTop + 10}px`;
+      }
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', adjustModalForKeyboard);
+      window.visualViewport.addEventListener('scroll', adjustModalForKeyboard);
+    }
+
     [devEmailInput, devPasswordInput].forEach(input => {
       input.addEventListener('focus', () => {
-        setTimeout(() => {
-          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 120);
+        setTimeout(adjustModalForKeyboard, 50);
       });
     });
 
@@ -696,6 +709,7 @@
         devEmailInput.value = '';
         devPasswordInput.value = '';
         devModal.showModal();
+        adjustModalForKeyboard();
       }
     };
 
