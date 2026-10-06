@@ -39,7 +39,7 @@ export default {
         });
       }
 
-      // Priority list of Gemini 3.x Flash models (Flash-Lite removed)
+      // Priority list of Gemini 3.x Flash models (Lite excluded)
       const models = [
         "gemini-3.8-flash",
         "gemini-3.7-flash",
@@ -75,14 +75,15 @@ Assistant:`;
       for (const model of models) {
         try {
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+          
+          // 9-second timeout allows cold-start TLS handshake to finish on attempt #1 without dropping
           const response = await fetch(url, {
             method: "POST",
             headers: { 
-              "Content-Type": "application/json",
-              "x-goog-api-key": apiKey
+              "Content-Type": "application/json"
             },
             body: JSON.stringify(payload),
-            signal: AbortSignal.timeout(5000)
+            signal: AbortSignal.timeout(9000)
           });
 
           if (!response.ok) {
@@ -90,10 +91,10 @@ Assistant:`;
           }
 
           const data = await response.json();
-          let rawOutput = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          const candidateParts = data.candidates?.[0]?.content?.parts || [];
+          let rawOutput = candidateParts.map(p => p.text || "").join("").trim();
 
           if (rawOutput) {
-            // Strip markdown asterisks, hashes, and unwanted leading colons/dashes
             finalReply = rawOutput
               .replace(/\*\*/g, "")
               .replace(/\*/g, "")
@@ -103,12 +104,12 @@ Assistant:`;
             break;
           }
         } catch (err) {
-          // If a model hangs or times out, immediately cycle to the next candidate
+          // If a model times out or encounters network issue, move to next model
           continue;
         }
       }
 
-      // Polite, natural fallback if upstream models are temporarily unreachable
+      // Polite, natural fallback
       if (!finalReply) {
         const lowerQ = question.toLowerCase();
         const isCompliment = /thank|amazing|love|great|awesome|good job|congrat|dev|best|cool/.test(lowerQ);
