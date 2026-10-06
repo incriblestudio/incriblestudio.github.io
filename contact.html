@@ -374,7 +374,7 @@
           createdAt: serverTimestamp()
         });
 
-        // Send email notification in the background
+        // Send formatted email notification in the background
         try {
           await fetch(`https://formsubmit.co/ajax/${DEV_NOTIFICATION_EMAIL}`, {
             method: "POST",
@@ -386,6 +386,7 @@
               name: name,
               email: email,
               _subject: `[Anima Clip Support] ${subject}`,
+              _template: "box",
               message: message
             })
           });
