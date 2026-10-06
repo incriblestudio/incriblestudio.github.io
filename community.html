@@ -54,6 +54,10 @@
       padding: 7px 14px;
       border-radius: 6px;
       cursor: pointer;
+      transition: background-color 0.2s, transform 0.15s;
+    }
+    .top-btn:active {
+      transform: scale(0.96);
     }
     .top-btn.active {
       background-color: #0d47a1;
@@ -414,6 +418,7 @@
       z-index: 1000;
       flex-direction: column;
       overflow: hidden;
+      transition: transform 0.25s ease, opacity 0.25s ease;
     }
     .ai-chat-header {
       background: linear-gradient(135deg, #8b5cf6, #6366f1);
@@ -497,22 +502,31 @@
 
     #devLoginModal {
       border: none;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.28);
       max-width: 320px;
       width: 90%;
       position: fixed;
-      top: 10px;
-      bottom: auto;
       left: 50%;
-      transform: translateX(-50%);
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.92);
       margin: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.22s ease, top 0.2s ease-out;
+    }
+
+    #devLoginModal[open] {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
     }
 
     dialog::backdrop {
       background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(3px);
+      transition: opacity 0.25s ease;
     }
   </style>
 </head>
@@ -668,23 +682,31 @@
     const devEmailInput = document.getElementById('devModalEmail');
     const devPasswordInput = document.getElementById('devModalPassword');
 
-    function adjustModalForKeyboard() {
+    // Auto-aligns smoothly directly within the available view space above virtual keyboards
+    function autoAlignModal() {
       if (!devModal.open) return;
       if (window.visualViewport) {
-        // Keeps modal strictly anchored at top: 10px relative to the visible window above keyboard
-        const offsetTop = window.visualViewport.offsetTop;
-        devModal.style.top = `${offsetTop + 10}px`;
+        const vp = window.visualViewport;
+        const availableHeight = vp.height;
+        const modalHeight = devModal.offsetHeight || 220;
+        
+        // Compute center point of visible viewport space
+        const targetTop = vp.offsetTop + Math.max(16, (availableHeight - modalHeight) / 2 + (modalHeight / 2));
+        devModal.style.top = `${targetTop}px`;
+      } else {
+        devModal.style.top = '50%';
       }
     }
 
     if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', adjustModalForKeyboard);
-      window.visualViewport.addEventListener('scroll', adjustModalForKeyboard);
+      window.visualViewport.addEventListener('resize', autoAlignModal);
+      window.visualViewport.addEventListener('scroll', autoAlignModal);
     }
 
     [devEmailInput, devPasswordInput].forEach(input => {
       input.addEventListener('focus', () => {
-        setTimeout(adjustModalForKeyboard, 50);
+        // Automatically smoothly recalibrate modal height when switching between fields
+        setTimeout(autoAlignModal, 60);
       });
     });
 
@@ -709,7 +731,10 @@
         devEmailInput.value = '';
         devPasswordInput.value = '';
         devModal.showModal();
-        adjustModalForKeyboard();
+        requestAnimationFrame(() => {
+          autoAlignModal();
+          devEmailInput.focus();
+        });
       }
     };
 
