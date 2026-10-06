@@ -495,6 +495,20 @@
       cursor: pointer;
     }
 
+    #devLoginModal {
+      border: none;
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      max-width: 320px;
+      width: 90%;
+      position: fixed;
+      top: 15% !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      margin: 0 !important;
+    }
+
     dialog::backdrop {
       background: rgba(0, 0, 0, 0.45);
       backdrop-filter: blur(2px);
@@ -595,7 +609,7 @@
     </div>
   </div>
 
-  <dialog id="devLoginModal" style="border: none; border-radius: 12px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); max-width: 320px; width: 90%;">
+  <dialog id="devLoginModal">
     <form id="devLoginForm" method="dialog" style="display: flex; flex-direction: column; gap: 12px;">
       <h3 style="margin: 0; color: #1a73e8; font-size: 16px;">Developer Authentication</h3>
       <input type="email" id="devModalEmail" placeholder="Developer Email" required autocomplete="username" style="margin-bottom: 0;">
@@ -650,6 +664,16 @@
     const devModal = document.getElementById('devLoginModal');
     const devForm = document.getElementById('devLoginForm');
     const btnCancelDev = document.getElementById('btnCancelDevLogin');
+    const devEmailInput = document.getElementById('devModalEmail');
+    const devPasswordInput = document.getElementById('devModalPassword');
+
+    [devEmailInput, devPasswordInput].forEach(input => {
+      input.addEventListener('focus', () => {
+        setTimeout(() => {
+          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 120);
+      });
+    });
 
     onAuthStateChanged(auth, (user) => {
       currentDevUser = user;
@@ -669,8 +693,8 @@
         await signOut(auth);
         showNotification("Logged out of Developer account.");
       } else {
-        document.getElementById('devModalEmail').value = '';
-        document.getElementById('devModalPassword').value = '';
+        devEmailInput.value = '';
+        devPasswordInput.value = '';
         devModal.showModal();
       }
     };
@@ -679,8 +703,8 @@
 
     devForm.onsubmit = async (e) => {
       e.preventDefault();
-      const email = document.getElementById('devModalEmail').value.trim();
-      const password = document.getElementById('devModalPassword').value;
+      const email = devEmailInput.value.trim();
+      const password = devPasswordInput.value;
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
