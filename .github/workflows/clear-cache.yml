@@ -1,0 +1,17 @@
+name: Clear All Caches
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Purge all caches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh cache delete --all --repo "$REPO"
