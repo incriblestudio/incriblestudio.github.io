@@ -1,0 +1,21 @@
+name: Delete All Workflow Runs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  delete-runs:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Delete workflow runs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Fetch and delete all runs except the currently running one
+          gh run list --repo "$REPO" --limit 1000 --json databaseId --jq '.[].databaseId' | \
+            grep -v "${{ github.run_id }}" | \
+            xargs -r -I {} -P 4 gh run delete {} --repo "$REPO"
+            
