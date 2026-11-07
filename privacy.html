@@ -47,6 +47,12 @@
       flex-shrink: 0;
     }
     
+    .shield-icon .icon-svg {
+      width: 26px;
+      height: 26px;
+      stroke-width: 2.2;
+    }
+    
     .title-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
     h1 { font-size: 1.75rem; color: var(--text-dark); line-height: 1.2; font-weight: 800; }
     .badge { background: var(--app-red-light); color: var(--app-red); font-size: 0.7rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; border: 1px solid #fbcfe8; letter-spacing: 0.5px; }
@@ -69,16 +75,33 @@
     /* Sections */
     .section-title {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 12px;
       font-size: 1.25rem;
       color: var(--text-dark);
       margin-top: 40px;
       margin-bottom: 16px;
       font-weight: 700;
+      line-height: 1.35;
     }
     
-    .icon-svg { stroke: var(--app-red); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; width: 22px; height: 22px; }
+    .icon-svg { 
+      stroke: var(--app-red); 
+      fill: none; 
+      stroke-width: 2.2; 
+      stroke-linecap: round; 
+      stroke-linejoin: round; 
+      width: 22px; 
+      height: 22px; 
+      flex-shrink: 0;
+    }
+
+    .section-title .icon-svg {
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
 
     .section-text {
       color: var(--text-gray);
@@ -95,7 +118,21 @@
       padding: 20px;
       margin-bottom: 20px;
     }
-    .yellow-box h3 { color: var(--app-red); font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .yellow-box h3 { 
+      color: var(--app-red); 
+      font-size: 1rem; 
+      display: flex; 
+      align-items: flex-start; 
+      gap: 10px; 
+      margin-bottom: 12px; 
+      line-height: 1.4;
+    }
+    .yellow-box h3 .icon-svg {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
     .yellow-box p { font-size: 0.9rem; color: #78350f; margin-bottom: 12px; }
     .yellow-box p:last-child { margin-bottom: 0; }
     .yellow-box strong { color: #451a03; }
@@ -107,7 +144,21 @@
       padding: 20px;
       margin-bottom: 24px;
     }
-    .storage-box h3 { color: var(--app-red); font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .storage-box h3 { 
+      color: var(--app-red); 
+      font-size: 1rem; 
+      display: flex; 
+      align-items: flex-start; 
+      gap: 10px; 
+      margin-bottom: 12px; 
+      line-height: 1.4;
+    }
+    .storage-box h3 .icon-svg {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
     .storage-box p { font-size: 0.95rem; color: var(--text-dark); margin-bottom: 0; }
 
     /* Links / Partner Boxes */
@@ -149,7 +200,7 @@
       flex-wrap: wrap;
       gap: 16px;
     }
-    .footer-compliance { font-size: 0.85rem; color: var(--text-dark); font-weight: 700; max-width: 200px; }
+    .footer-compliance { font-size: 0.85rem; color: var(--text-dark); font-weight: 700; max-width: 240px; }
     
     .btn-primary {
       background: var(--app-red);
@@ -218,7 +269,7 @@
     
     <div class="yellow-box">
       <h3>
-        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
         Microphone / Audio Recording (RECORD_AUDIO):
       </h3>
       <p><strong>Purpose:</strong> Used exclusively to allow you to record voiceovers, dialogue, and sound effects synchronized directly with your animation timeline in the Audio Studio.</p>
@@ -228,7 +279,7 @@
 
     <div class="storage-box">
       <h3>
-        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
         Storage & Media Access (Storage Access Framework):
       </h3>
       <p><strong>Purpose:</strong> Allows importing background images, audio tracks, and reference videos, as well as exporting your completed animations as GIF, MP4, PNG sequences, or .anm project packages. All imported assets and saved animations remain strictly stored inside your device's local storage sandbox.</p>
@@ -308,8 +359,11 @@
     </div>
 
     <!-- Section 8 -->
-    <div class="partner-box" style="margin-top: 40px;">
-      <h4>8. CONTACT US</h4>
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22 6 12 13 2 6"></polyline></svg>
+      8. Contact Us
+    </h2>
+    <div class="partner-box">
       <div class="section-text" style="margin-bottom: 12px; font-size: 0.9rem;">
         If you have questions, feedback, or data requests regarding this Privacy Policy or your data, please contact us:
       </div>
