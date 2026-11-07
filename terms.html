@@ -46,6 +46,12 @@
       color: var(--app-red);
       flex-shrink: 0;
     }
+
+    .shield-icon .icon-svg {
+      width: 26px;
+      height: 26px;
+      stroke-width: 2.2;
+    }
     
     .title-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
     h1 { font-size: 1.75rem; color: var(--text-dark); line-height: 1.2; font-weight: 800; }
@@ -69,16 +75,33 @@
     /* Sections */
     .section-title {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 12px;
       font-size: 1.25rem;
       color: var(--text-dark);
       margin-top: 40px;
       margin-bottom: 16px;
       font-weight: 700;
+      line-height: 1.35;
     }
     
-    .icon-svg { stroke: var(--app-red); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; width: 22px; height: 22px; }
+    .icon-svg { 
+      stroke: var(--app-red); 
+      fill: none; 
+      stroke-width: 2.2; 
+      stroke-linecap: round; 
+      stroke-linejoin: round; 
+      width: 22px; 
+      height: 22px; 
+      flex-shrink: 0;
+    }
+
+    .section-title .icon-svg {
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
 
     .section-text {
       color: var(--text-gray);
@@ -95,7 +118,21 @@
       padding: 20px;
       margin-bottom: 20px;
     }
-    .yellow-box h3 { color: var(--app-red); font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .yellow-box h3 { 
+      color: var(--app-red); 
+      font-size: 1rem; 
+      display: flex; 
+      align-items: flex-start; 
+      gap: 10px; 
+      margin-bottom: 12px; 
+      line-height: 1.4;
+    }
+    .yellow-box h3 .icon-svg {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
     .yellow-box p { font-size: 0.9rem; color: #78350f; margin-bottom: 12px; }
     .yellow-box p:last-child { margin-bottom: 0; }
     .yellow-box strong { color: #451a03; }
@@ -107,7 +144,21 @@
       padding: 20px;
       margin-bottom: 24px;
     }
-    .storage-box h3 { color: var(--app-red); font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .storage-box h3 { 
+      color: var(--app-red); 
+      font-size: 1rem; 
+      display: flex; 
+      align-items: flex-start; 
+      gap: 10px; 
+      margin-bottom: 12px; 
+      line-height: 1.4;
+    }
+    .storage-box h3 .icon-svg {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
     .storage-box p { font-size: 0.95rem; color: var(--text-dark); margin-bottom: 0; }
 
     /* Links / Partner Boxes */
@@ -176,7 +227,7 @@
       <div>
         <div class="title-row">
           <h1>Terms of Service for<br>Anima Clip</h1>
-          <span class="badge">LEGAL</span>
+          <span class="badge">OFFICIAL</span>
         </div>
         <div class="meta-text">Dev: <span>Incrible Studio</span></div>
         <div class="meta-text">Effective: <span>Nov 7, 2026</span></div>
@@ -200,7 +251,7 @@
     <ul class="bullet-list">
       <li><strong>Trade Name / Developer:</strong> Incrible Studio</li>
       <li><strong>Developer Representative:</strong> Sarowar Hossain</li>
-      <li><strong>Electronic Contact / Support:</strong> <a href="mailto:hossainsarowar001@gmail.com" style="color: var(--app-red);">hossainsarowar001@gmail.com</a></li>
+      <li><strong>Electronic Contact / Support:</strong> <a href="mailto:incriblestudiodeveloper@gmail.com" style="color: var(--app-red);">incriblestudiodeveloper@gmail.com</a></li>
       <li><strong>Official Portal:</strong> <a href="https://incriblestudio.github.io/" target="_blank" style="color: var(--app-red);">https://incriblestudio.github.io/</a></li>
     </ul>
     <div class="section-text">
@@ -217,7 +268,7 @@
     </div>
     <div class="storage-box">
       <h3>
-        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
         Local-First Architecture & Free Model
       </h3>
       <p style="margin-bottom: 8px;"><strong>Local Processing:</strong> The App functions primarily offline on your device. Your drawings, animation cels, audio clips, and project files are processed and stored locally on your device’s internal storage.</p>
@@ -231,7 +282,7 @@
     </h2>
     <div class="yellow-box">
       <h3>
-        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
         You retain 100% full copyright, ownership, and intellectual property rights to all content you create using Anima Clip:
       </h3>
       <p><strong>Your Artwork:</strong> Any drawings, sketches, animations, frames, layers, audio recordings, or exported files (GIF, MP4, PNG sequence, .anm project bundles) created by you are entirely your property.</p>
@@ -284,7 +335,7 @@
     </h2>
     <div class="yellow-box">
       <h3>
-        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
         Important Notice Regarding Local Projects:
       </h3>
       <p><strong>User Backup Responsibility:</strong> You are solely responsible for backing up your animation projects and exported media files. We strongly recommend regularly exporting your important projects as .anm project packages or video files to an external storage device, SD card, or cloud storage provider.</p>
@@ -359,17 +410,20 @@
       These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles.
     </div>
     <div class="section-text">
-      For European Union consumers: The European Commission provides an Online Dispute Resolution (ODR) platform, accessible at: <a href="https://ec.europa.eu/consumers/odr" target="_blank" style="color: var(--app-red);">https://ec.europa.eu/consumers/odr ↗</a>. In case of any dispute or claim, we encourage you to contact us directly at <a href="mailto:hossainsarowar001@gmail.com" style="color: var(--app-red);">hossainsarowar001@gmail.com</a> so we can resolve the matter amicably.
+      For European Union consumers: The European Commission provides an Online Dispute Resolution (ODR) platform, accessible at: <a href="https://ec.europa.eu/consumers/odr" target="_blank" style="color: var(--app-red);">https://ec.europa.eu/consumers/odr ↗</a>. In case of any dispute or claim, we encourage you to contact us directly at <a href="mailto:incriblestudiodeveloper@gmail.com" style="color: var(--app-red);">incriblestudiodeveloper@gmail.com</a> so we can resolve the matter amicably.
     </div>
 
     <!-- Section 13 -->
-    <div class="partner-box" style="margin-top: 40px;">
-      <h4>13. CONTACT INFORMATION</h4>
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22 6 12 13 2 6"></polyline></svg>
+      13. Contact Information
+    </h2>
+    <div class="partner-box">
       <div class="section-text" style="margin-bottom: 12px; font-size: 0.9rem;">
         If you have any questions, feedback, or legal inquiries concerning these Terms of Service or Anima Clip, please contact us:
       </div>
       <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark);">Developer: <span style="font-weight: 400; color: var(--text-gray);">Incrible Studio</span></p>
-      <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark);">Email: <a href="mailto:hossainsarowar001@gmail.com" style="font-weight: 400;">hossainsarowar001@gmail.com</a></p>
+      <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark);">Email: <a href="mailto:incriblestudiodeveloper@gmail.com" style="font-weight: 400;">incriblestudiodeveloper@gmail.com</a></p>
       <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-top: 4px;">Website: <a href="https://incriblestudio.github.io/" target="_blank" style="font-weight: 400;">https://incriblestudio.github.io/</a></p>
     </div>
 
