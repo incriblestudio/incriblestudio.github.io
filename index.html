@@ -177,12 +177,17 @@
       border-top: 1px solid var(--border); 
       padding: 2.5rem 0 3.5rem; 
       display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      flex-wrap: wrap; 
-      gap: 1rem; 
+      flex-direction: column;
+      gap: 1.25rem; 
       font-size: 0.875rem; 
       color: var(--text-muted); 
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
     .copyright { color: var(--text-muted); font-weight: 400; }
     .footer-links a { 
@@ -192,10 +197,23 @@
       transition: color 0.2s; 
     }
     .footer-links a:hover { color: var(--text); }
+    .footer-sub {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 0.25rem;
+    }
+    .footer-sub a {
+      color: #94a3b8;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-sub a:hover { color: var(--text); }
 
     @media (max-width: 600px) {
-      footer { flex-direction: column; text-align: center; gap: 1.25rem; }
+      .footer-top { flex-direction: column; text-align: center; gap: 1.25rem; }
       .footer-links a { margin: 0 0.6rem; }
+      .footer-sub { justify-content: center; }
     }
   </style>
 </head>
@@ -249,19 +267,19 @@
 
     <section id="features" class="features">
       <div class="card">
-        <h3>🎬 Frame-by-Frame Timeline</h3>
+        <h3>🎨 Frame-by-Frame Timeline</h3>
         <p>Add, duplicate, reorder, and review frames seamlessly with a scrubbable timeline designed for touch screens.</p>
       </div>
       <div class="card">
-        <h3>🖼 Import Media Assets</h3>
+        <h3>🖼️ Import Media Assets</h3>
         <p>Bring background imagery and video reference clips directly onto your canvas to animate over or trace with ease.</p>
       </div>
       <div class="card">
-        <h3>📝 Text Tool & Layering</h3>
+        <h3>✏️ Text Tool & Layering</h3>
         <p>Overlay text assets and manage your scene elements to build titles, motion typography, and character dialog.</p>
       </div>
       <div class="card">
-        <h3>💾 Local Device Storage</h3>
+        <h3>🔒 Local Device Storage</h3>
         <p>All projects and creative files are stored locally on your device, ensuring your drawings remain private and accessible offline.</p>
       </div>
     </section>
@@ -273,10 +291,15 @@
     </section>
 
     <footer>
-      <p class="copyright">&copy; 2026 Incrible Studio. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="contact.html">Support</a>
-        <a href="privacy.html">Privacy Policy</a>
+      <div class="footer-top">
+        <p class="copyright">&copy; 2026 Incrible Studio. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="contact.html">Support</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+      <div class="footer-sub">
         <a href="/app-ads.txt">app-ads.txt</a>
       </div>
     </footer>
