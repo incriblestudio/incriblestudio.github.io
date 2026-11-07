@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service - Anima Clip</title>
+  
+  <style>
+    :root {
+      --app-red: #ff4f64;
+      --app-red-light: #fff0f2;
+      --text-dark: #0f172a;
+      --text-gray: #475569;
+      --border-color: #e2e8f0;
+      --bg-main: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    
+    body { 
+      background-color: var(--bg-main); 
+      color: var(--text-dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* Header Section */
+    .header { 
+      display: flex; 
+      align-items: flex-start; 
+      gap: 16px;
+      margin-bottom: 32px; 
+    }
+    
+    .shield-icon {
+      width: 48px; height: 48px;
+      background: var(--app-red-light);
+      border-radius: 14px;
+      display: flex; justify-content: center; align-items: center;
+      color: var(--app-red);
+      flex-shrink: 0;
+    }
+    
+    .title-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+    h1 { font-size: 1.75rem; color: var(--text-dark); line-height: 1.2; font-weight: 800; }
+    .badge { background: var(--app-red-light); color: var(--app-red); font-size: 0.7rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; border: 1px solid #fbcfe8; letter-spacing: 0.5px; }
+    
+    .meta-text { color: var(--text-dark); font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .meta-text span { font-weight: 400; color: var(--text-gray); }
+
+    /* Intro Box */
+    .intro-box {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      font-size: 1rem;
+      color: var(--text-dark);
+      font-weight: 500;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+      margin-bottom: 40px;
+    }
+
+    /* Sections */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      color: var(--text-dark);
+      margin-top: 40px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    
+    .icon-svg { stroke: var(--app-red); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; width: 22px; height: 22px; }
+
+    .section-text {
+      color: var(--text-gray);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .section-text strong { color: var(--text-dark); }
+
+    /* Yellow Highlight Box */
+    .yellow-box {
+      background: #fffbeb;
+      border: 1.5px solid #fef08a;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .yellow-box h3 { color: var(--app-red); font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .yellow-box p { font-size: 0.9rem; color: #78350f; margin-bottom: 12px; }
+    .yellow-box p:last-child { margin-bottom: 0; }
+    .yellow-box strong { color: #451a03; }
+
+    /* Storage / Gray Box */
+    .storage-box {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .storage-box h3 { color: var(--app-red); font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .storage-box p { font-size: 0.95rem; color: var(--text-dark); margin-bottom: 0; }
+
+    /* Links / Partner Boxes */
+    .partner-box {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: #fafafa;
+    }
+    .partner-box h4 { color: var(--app-red); font-size: 0.95rem; margin-bottom: 6px; }
+    .partner-box a { color: var(--app-red); font-size: 0.9rem; text-decoration: underline; word-break: break-all; }
+    .partner-box a:hover { text-decoration: none; }
+
+    /* Bullet List */
+    ul.bullet-list { margin-left: 24px; font-size: 0.95rem; color: var(--text-gray); margin-bottom: 24px; }
+    ul.bullet-list li { margin-bottom: 10px; }
+    ul.bullet-list strong { color: var(--text-dark); }
+
+    /* Footer Elements */
+    .footer-area {
+      margin-top: 60px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-compliance { font-size: 0.85rem; color: var(--text-dark); font-weight: 700; max-width: 240px; }
+    
+    .btn-primary {
+      background: var(--app-red);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      transition: transform 0.1s;
+    }
+    .btn-primary:hover { transform: scale(0.98); }
+
+    @media (max-width: 600px) {
+      .header { flex-direction: column; align-items: flex-start; }
+      h1 { font-size: 1.5rem; }
+      .footer-area { flex-direction: column; align-items: stretch; text-align: center; }
+      .footer-compliance { max-width: 100%; margin-bottom: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+      <div class="shield-icon">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      </div>
+      <div>
+        <div class="title-row">
+          <h1>Terms of Service for<br>Anima Clip</h1>
+          <span class="badge">LEGAL</span>
+        </div>
+        <div class="meta-text">Dev: <span>Incrible Studio</span></div>
+        <div class="meta-text">Effective: <span>Nov 7, 2026</span></div>
+        <div class="meta-text">Updated: <span>Nov 7, 2026</span></div>
+      </div>
+    </div>
+
+    <!-- Intro Box -->
+    <div class="intro-box">
+      Please read these Terms of Service ("Terms", "Agreement") carefully before downloading, installing, accessing, or using the <strong>Anima Clip</strong> mobile application ("App", "Service"), operated by <strong>Incrible Studio</strong> ("we", "us", "our"). By installing, accessing, or using Anima Clip, you agree to be bound by these Terms.
+    </div>
+
+    <!-- Section 1 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      1. Trader Declaration & Developer Identification (EU DSA Compliance)
+    </h2>
+    <div class="section-text">
+      In accordance with Article 30 of Regulation (EU) 2022/2065 (Digital Services Act - DSA), the provider of this application declares its status as a trader on the Google Play Store:
+    </div>
+    <ul class="bullet-list">
+      <li><strong>Trade Name / Developer:</strong> Incrible Studio</li>
+      <li><strong>Developer Representative:</strong> Sarowar Hossain</li>
+      <li><strong>Electronic Contact / Support:</strong> <a href="mailto:hossainsarowar001@gmail.com" style="color: var(--app-red);">hossainsarowar001@gmail.com</a></li>
+      <li><strong>Official Portal:</strong> <a href="https://incriblestudio.github.io/" target="_blank" style="color: var(--app-red);">https://incriblestudio.github.io/</a></li>
+    </ul>
+    <div class="section-text">
+      You may contact us directly via email regarding technical support, consumer inquiries, or legal notifications.
+    </div>
+
+    <!-- Section 2 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+      2. Description of the Service
+    </h2>
+    <div class="section-text">
+      Anima Clip is a 2D animation, frame-by-frame illustration, multi-layer canvas, and digital audio synchronization application.
+    </div>
+    <div class="storage-box">
+      <h3>
+        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+        Local-First Architecture & Free Model
+      </h3>
+      <p style="margin-bottom: 8px;"><strong>Local Processing:</strong> The App functions primarily offline on your device. Your drawings, animation cels, audio clips, and project files are processed and stored locally on your device’s internal storage.</p>
+      <p><strong>Cost:</strong> Anima Clip is provided as a <strong>Free Application</strong> supported by integrated digital advertisements.</p>
+    </div>
+
+    <!-- Section 3 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      3. User Ownership & Intellectual Property of Your Artwork
+    </h2>
+    <div class="yellow-box">
+      <h3>
+        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        You retain 100% full copyright, ownership, and intellectual property rights to all content you create using Anima Clip:
+      </h3>
+      <p><strong>Your Artwork:</strong> Any drawings, sketches, animations, frames, layers, audio recordings, or exported files (GIF, MP4, PNG sequence, .anm project bundles) created by you are entirely your property.</p>
+      <p><strong>Commercial Use:</strong> You are free to publish, sell, distribute, monetize, or display your animations and exported videos anywhere in the world without paying royalties or fees to Incrible Studio.</p>
+      <p><strong>No License Granted to Us:</strong> Because Anima Clip operates locally and does not upload your artwork to our servers, we claim no license, ownership, or rights over your creative output.</p>
+    </div>
+
+    <!-- Section 4 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+      4. Incrible Studio’s Intellectual Property Rights
+    </h2>
+    <div class="section-text">
+      The App itself—including but not limited to its software code, brush engine algorithms, audio DSP filters, user interface (UI), logos, graphics, icons, visual design, and documentation—is the exclusive proprietary property of Incrible Studio and is protected by international copyright, trademark, and intellectual property laws.
+    </div>
+    <ul class="bullet-list">
+      <li>You are granted a personal, non-exclusive, non-transferable, revocable license to use Anima Clip on compatible Android devices for personal or commercial creative purposes in accordance with these Terms.</li>
+      <li>You agree not to reverse engineer, decompile, disassemble, modify, create derivative works of, or distribute the App's source code or binary packages without our prior written consent.</li>
+    </ul>
+
+    <!-- Section 5 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+      5. Third-Party Advertisements & Monetization
+    </h2>
+    <div class="section-text">
+      To maintain Anima Clip as a free creative application, the App integrates industry-standard advertising networks:
+    </div>
+    <div class="partner-box">
+      <h4>Advertising Partners:</h4>
+      <div class="section-text" style="margin-bottom: 0;">Google AdMob, Meta Audience Network, and Unity Ads / ironSource LevelPlay.</div>
+    </div>
+    <div class="partner-box">
+      <h4>Ad Formats:</h4>
+      <div class="section-text" style="margin-bottom: 0;">The App may display banner ads, post-export interstitial ads, and user-initiated rewarded ads (which allow you to unlock optional features by voluntarily viewing an ad).</div>
+    </div>
+    <div class="partner-box">
+      <h4>User Consent (GDPR / UMP):</h4>
+      <div class="section-text" style="margin-bottom: 0;">For users residing in the European Economic Area (EEA), United Kingdom (UK), and Switzerland, we utilize Google's User Messaging Platform (UMP) to obtain explicit consent before serving personalized advertisements. You may update or revoke your consent preferences at any time in the in-app Privacy Policy settings.</div>
+    </div>
+    <div class="partner-box">
+      <h4>Ad Content:</h4>
+      <div class="section-text" style="margin-bottom: 0;">We strive to ensure advertisements displayed are appropriate; however, third-party ad networks control ad delivery. We are not responsible for the content, privacy practices, or goods/services offered by third-party advertisers.</div>
+    </div>
+
+    <!-- Section 6 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+      6. Local Storage, Data Backup & Device Responsibility
+    </h2>
+    <div class="yellow-box">
+      <h3>
+        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        Important Notice Regarding Local Projects:
+      </h3>
+      <p><strong>User Backup Responsibility:</strong> You are solely responsible for backing up your animation projects and exported media files. We strongly recommend regularly exporting your important projects as .anm project packages or video files to an external storage device, SD card, or cloud storage provider.</p>
+      <p><strong>App Uninstall / Clear Data:</strong> Uninstalling the App, clearing application data/cache in Android Settings, or performing a factory reset will permanently erase locally stored projects. Incrible Studio cannot restore projects lost due to device resets, hardware failure, or app deletion.</p>
+    </div>
+
+    <!-- Section 7 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+      7. Permitted Use & Prohibited Conduct
+    </h2>
+    <div class="section-text">
+      When using Anima Clip, you agree not to:
+    </div>
+    <ul class="bullet-list">
+      <li>Use the App for any unlawful, fraudulent, or malicious purpose under applicable local, national, or international laws.</li>
+      <li>Attempt to bypass, tamper with, or manipulate ad delivery mechanisms or reward verification systems.</li>
+      <li>Distribute modified, cracked, or unauthorized APK/AAB packages of the App.</li>
+      <li>Introduce viruses, trojans, worms, or other malicious software into the App.</li>
+    </ul>
+
+    <!-- Section 8 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      8. European Union (EU) Consumer Rights & Digital Content Notice
+    </h2>
+    <div class="section-text">
+      If you are a consumer residing within the European Union:
+    </div>
+    <ul class="bullet-list">
+      <li><strong>Digital Content Delivery:</strong> Under the EU Consumer Rights Directive and Directive (EU) 2019/770 on digital content and services, you acknowledge that by downloading and running Anima Clip, the performance of the digital service begins immediately.</li>
+      <li><strong>Free Digital Content:</strong> As Anima Clip is provided free of charge, standard statutory rights of withdrawal for paid digital goods are subject to statutory provisions governing free digital services supported by advertisement processing.</li>
+      <li><strong>Statutory Warranty:</strong> We provide digital content that conforms to standard functional quality standards under EU consumer law.</li>
+    </ul>
+
+    <!-- Section 9 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      9. Disclaimer of Warranties
+    </h2>
+    <div class="section-text">
+      Anima Clip is provided on an <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> basis without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, non-infringement, or uninterrupted, bug-free operation.
+    </div>
+    <div class="section-text">
+      While we rigorously test Anima Clip across diverse Android hardware configurations, we do not warrant that the App will meet every individual hardware requirement, operate error-free on all custom Android ROMs, or that unexpected data corruption caused by device hardware or OS crashes will never occur.
+    </div>
+
+    <!-- Section 10 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      10. Limitation of Liability
+    </h2>
+    <div class="section-text">
+      To the maximum extent permitted by applicable law, Incrible Studio and its developers shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of data, loss of artwork, device malfunction, or loss of profits arising out of or related to your use of, or inability to use, Anima Clip.
+    </div>
+
+    <!-- Section 11 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      11. Changes to These Terms
+    </h2>
+    <div class="section-text">
+      We reserve the right to revise or update these Terms periodically to reflect updates to our features, legal standards, or regulatory obligations. When changes are made, we will update the "Last Updated" date at the top of this document. Continued use of the App following the posting of revised Terms constitutes your acceptance of the changes.
+    </div>
+
+    <!-- Section 12 -->
+    <h2 class="section-title">
+      <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      12. Governing Law & Dispute Resolution
+    </h2>
+    <div class="section-text">
+      These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles.
+    </div>
+    <div class="section-text">
+      For European Union consumers: The European Commission provides an Online Dispute Resolution (ODR) platform, accessible at: <a href="https://ec.europa.eu/consumers/odr" target="_blank" style="color: var(--app-red);">https://ec.europa.eu/consumers/odr ↗</a>. In case of any dispute or claim, we encourage you to contact us directly at <a href="mailto:hossainsarowar001@gmail.com" style="color: var(--app-red);">hossainsarowar001@gmail.com</a> so we can resolve the matter amicably.
+    </div>
+
+    <!-- Section 13 -->
+    <div class="partner-box" style="margin-top: 40px;">
+      <h4>13. CONTACT INFORMATION</h4>
+      <div class="section-text" style="margin-bottom: 12px; font-size: 0.9rem;">
+        If you have any questions, feedback, or legal inquiries concerning these Terms of Service or Anima Clip, please contact us:
+      </div>
+      <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark);">Developer: <span style="font-weight: 400; color: var(--text-gray);">Incrible Studio</span></p>
+      <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark);">Email: <a href="mailto:hossainsarowar001@gmail.com" style="font-weight: 400;">hossainsarowar001@gmail.com</a></p>
+      <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-top: 4px;">Website: <a href="https://incriblestudio.github.io/" target="_blank" style="font-weight: 400;">https://incriblestudio.github.io/</a></p>
+    </div>
+
+    <!-- Footer Area -->
+    <div class="footer-area">
+      <div class="footer-compliance">Google Play Console Policy & EU DSA Compliant</div>
+      <a href="index.html" class="btn-primary">Return to Home</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
